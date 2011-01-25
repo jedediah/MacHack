@@ -9,11 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #include <ApplicationServices/ApplicationServices.h>
 
+#import "Console.h"
+
 @interface KeyFilter : NSObject {
   int escapeCount;
   CFRunLoopRef runLoop;
   CFMachPortRef eventTap;
+  NSObject<Console>* console;
   bool enabled;
+  bool rightShiftFlag;
 }
 
 - (CGEventRef) callbackWithProxy:(CGEventTapProxy) proxy
@@ -24,5 +28,5 @@
 - (void) enable;
 - (void) disable;
 - (bool) isEnabled;
-
+- (void) setConsole:(NSObject<Console>*) con;
 @end

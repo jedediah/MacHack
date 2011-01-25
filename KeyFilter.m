@@ -7,7 +7,10 @@
 //
 
 #import "KeyFilter.h"
+#import "MacHackAppDelegate.h"
+
 #include "keys.h"
+
 
 @implementation KeyFilter
 
@@ -68,57 +71,119 @@ CGEventRef Callback(CGEventTapProxy proxy,
                type:(CGEventType) type
                event:(CGEventRef) event {
 
-  if (type == kCGEventTapDisabledByTimeout) {
-    CGEventTapEnable(eventTap, true);
-    return event;
-  }
-  
-  if (type != kCGEventKeyUp && type != kCGEventKeyDown)
-    return event;
-  
   Context ctx;
   ctx.proxy = proxy;
   ctx.source = CGEventCreateSourceFromEvent(event);
-  
-  CGKeyCode keycode = (CGKeyCode) CGEventGetIntegerValueField(event,kCGKeyboardEventKeycode);    
+
   CGEventFlags flags = CGEventGetFlags(event);
-  //CGEventSourceStateID ssid = CGEventSourceGetSourceStateID(ctx.source);
+    
+  CGKeyCode keycode = (CGKeyCode) CGEventGetIntegerValueField(event,kCGKeyboardEventKeycode);    
   
-  if (keycode == VK_ESCAPE) {
-    if (type == kCGEventKeyDown && ++escapeCount >= 5)
-      CFRunLoopStop(runLoop);
-  } else {
-    escapeCount = 0;
+  if (console) {
+    NSString* typeStr;
+    switch (type) {
+      case kCGEventKeyDown:               typeStr = @"KeyDown      "; break;
+      case kCGEventKeyUp:                 typeStr = @"KeyUp        "; break;
+      case kCGEventFlagsChanged:          typeStr = @"FlagsChanged "; break;
+      case kCGEventTapDisabledByTimeout:  typeStr = @"DisabledByTimeout"; break;
+      default:                            typeStr = @"Unknown"; break; 
+    }
+    
+    NSString* flagStr = @"";
+    if (flags & kCGEventFlagMaskAlphaShift)   flagStr = [flagStr stringByAppendingString:@" AlphaShift"];
+    if (flags & kCGEventFlagMaskAlternate)    flagStr = [flagStr stringByAppendingString:@" Alternate"];
+    if (flags & kCGEventFlagMaskCommand)      flagStr = [flagStr stringByAppendingString:@" Command"];
+    if (flags & kCGEventFlagMaskControl)      flagStr = [flagStr stringByAppendingString:@" Control"];
+    if (flags & kCGEventFlagMaskHelp)         flagStr = [flagStr stringByAppendingString:@" Help"];
+    //if (flags & kCGEventFlagMaskNonCoalesced) flagStr = [flagStr stringByAppendingString:@" NonCoalesced"];
+    if (flags & kCGEventFlagMaskNumericPad)   flagStr = [flagStr stringByAppendingString:@" NumericPad"];
+    if (flags & kCGEventFlagMaskSecondaryFn)  flagStr = [flagStr stringByAppendingString:@" SecondaryFn"];
+    if (flags & kCGEventFlagMaskShift)        flagStr = [flagStr stringByAppendingString:@" Shift"];
+    
+    [console printToConsole:@"%@ %3i%@\n", typeStr, keycode, flagStr];
   }
   
-  switch (keycode) {
-      
-    case VK_SPACE:
-      if (flags & kCGEventFlagMaskShift)
-        SetKeyCode(event, VK_MINUS, flags);
+  switch (type) {
+  
+    case kCGEventTapDisabledByTimeout:
+      CGEventTapEnable(eventTap, true);
+      break;
+    
+    case kCGEventFlagsChanged:
+      switch (keycode) {
+        case VK_COMMAND_R:
+          CGEventSetType(event,
+                         flags & kCGEventFlagMaskCommand
+                         ? kCGEventKeyDown
+                         : kCGEventKeyUp); 
+          
+          SetKeyCode(event,
+                     VK_A,
+                     (flags | kCGEventFlagMaskControl) & ~kCGEventFlagMaskCommand);
+          break;
+          
+        case VK_OPTION_R:
+          CGEventSetType(event,
+                         flags & kCGEventFlagMaskAlternate
+                         ? kCGEventKeyDown
+                         : kCGEventKeyUp); 
+          
+          SetKeyCode(event,
+                     VK_E,
+                     (flags | kCGEventFlagMaskControl) & ~kCGEventFlagMaskAlternate);
+          break;
+          
+        case VK_SHIFT_R:
+          if (flags & kCGEventFlagMaskShift) {
+            rightShiftFlag = true;
+          } else if (rightShiftFlag) {
+            rightShiftFlag = false;
+            PostKeyPress(ctx, VK_FORWARD_DELETE, flags);
+          }
+          break;
+      }
       break;
       
-    case VK_HOME:
-      SetKeyCode(event, VK_A, flags | kCGEventFlagMaskControl);
-      break;
+    case kCGEventKeyDown:
+    case kCGEventKeyUp:
+      rightShiftFlag = false;
+      if (keycode == VK_ESCAPE) {
+        if (type == kCGEventKeyDown && ++escapeCount >= 5)
+          CFRunLoopStop(runLoop);
+      } else {
+        escapeCount = 0;
+      }
       
-    case VK_END:
-      SetKeyCode(event, VK_E, flags | kCGEventFlagMaskControl);
-      break;
-      
-    case VK_PAGE_UP:
-      if (flags & kCGEventFlagMaskControl)
-        SetKeyCode(event, VK_HOME, flags & ~kCGEventFlagMaskControl);
-      break;
-      
-    case VK_PAGE_DOWN:
-      if (flags & kCGEventFlagMaskControl)
-        SetKeyCode(event, VK_END, flags & ~kCGEventFlagMaskControl);
-      break;
-      
-    case VK_DELETE:
-      if (flags & kCGEventFlagMaskShift)
-        SetKeyCode(event, VK_FORWARD_DELETE, flags);
+      switch (keycode) {
+          
+        case VK_SPACE:
+          if (flags & kCGEventFlagMaskShift)
+            SetKeyCode(event, VK_MINUS, flags);
+          break;
+          
+        case VK_HOME:
+          SetKeyCode(event, VK_A, flags | kCGEventFlagMaskControl);
+          break;
+          
+        case VK_END:
+          SetKeyCode(event, VK_E, flags | kCGEventFlagMaskControl);
+          break;
+          
+        case VK_PAGE_UP:
+          if (flags & kCGEventFlagMaskControl)
+            SetKeyCode(event, VK_HOME, flags & ~kCGEventFlagMaskControl);
+          break;
+          
+        case VK_PAGE_DOWN:
+          if (flags & kCGEventFlagMaskControl)
+            SetKeyCode(event, VK_END, flags & ~kCGEventFlagMaskControl);
+          break;
+          
+        case VK_DELETE:
+          if (flags & kCGEventFlagMaskShift)
+            SetKeyCode(event, VK_FORWARD_DELETE, flags);
+          break;
+      }
       break;
   }
   
@@ -177,6 +242,12 @@ CGEventRef Callback(CGEventTapProxy proxy,
 
 - (bool) isEnabled {
   return enabled;
+}
+
+- (void) setConsole:(NSObject<Console>*) con {
+  [con retain];
+  [console release];
+  console = con;
 }
 
 @end

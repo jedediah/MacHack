@@ -12,6 +12,7 @@
 		851E700112EDE86D00F4882A /* keys.c in Sources */ = {isa = PBXBuildFile; fileRef = 851E6FFE12EDE86D00F4882A /* keys.c */; };
 		851E700F12EDF03700F4882A /* KeyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 851E700E12EDF03700F4882A /* KeyFilter.m */; };
 		852336B712EEC43800C5C0FF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 852336B612EEC43800C5C0FF /* .gitignore */; };
+		852336B912EEC61900C5C0FF /* README in Resources */ = {isa = PBXBuildFile; fileRef = 852336B812EEC61900C5C0FF /* README */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -32,6 +33,8 @@
 		851E700D12EDF03700F4882A /* KeyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyFilter.h; sourceTree = "<group>"; };
 		851E700E12EDF03700F4882A /* KeyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyFilter.m; sourceTree = "<group>"; };
 		852336B612EEC43800C5C0FF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		852336B812EEC61900C5C0FF /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		8542F64912EF009F00876AB1 /* Console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Console.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MacHack-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MacHack-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MacHack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacHack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -55,6 +58,7 @@
 				256AC3D90F4B6AC300CF3369 /* MacHackAppDelegate.m */,
 				851E700D12EDF03700F4882A /* KeyFilter.h */,
 				851E700E12EDF03700F4882A /* KeyFilter.m */,
+				8542F64912EF009F00876AB1 /* Console.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -97,6 +101,7 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				851E6F8312EDDBF100F4882A /* MainMenu.xib */,
 				852336B612EEC43800C5C0FF /* .gitignore */,
+				852336B812EEC61900C5C0FF /* README */,
 			);
 			name = MacHack;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				851E6F8412EDDBF100F4882A /* MainMenu.xib in Resources */,
 				852336B712EEC43800C5C0FF /* .gitignore in Resources */,
+				852336B912EEC61900C5C0FF /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
