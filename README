@@ -1,5 +1,8 @@
 Features
   Keyboard Filters
-    Shift+Space emits underscore '_'
-    Home and End emit Ctrl-A (beginning-of-line) and Ctrl-E (end-of-line)
-    
+    Shift+Space does underscore '_'
+    Home and End do Ctrl-A (beginning-of-line) and Ctrl-E (end-of-line)
+    Ctrl-PgUp and Ctrl-PgDn do Home and End
+    Right side Command and Alt changed do Ctrl-A and Ctrl-E
+    Right side Shift does forward-delete if you release it without pressing another key
+    Shift-delete does forward-delete
