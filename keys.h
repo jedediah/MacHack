@@ -18,17 +18,17 @@
 #define VK_F14            107
 #define VK_F15            113
 
-#define VK_BACKTICK           50
-#define VK_ONE         18
-#define VK_TWO         19
-#define VK_THREE       20
-#define VK_FOUR        21
-#define VK_FIVE        23
-#define VK_SIX         22
-#define VK_SEVEN       26
-#define VK_EIGHT       28
-#define VK_NINE        25
-#define VK_ZERO        29
+#define VK_BACKTICK        50
+#define VK_1               18
+#define VK_2               19
+#define VK_3               20
+#define VK_4               21
+#define VK_5               23
+#define VK_6               22
+#define VK_7               26
+#define VK_8               28
+#define VK_9               25
+#define VK_0               29
 #define VK_MINUS       27
 #define VK_EQUALS      24
 #define VK_DELETE      51
@@ -132,5 +132,8 @@
 #define VK_FLAG_CTRL  0x20000000
 
 extern int CharToKeyCode[];
+
+bool vkIsLetter(int key);
+bool vkIsNumber(int key);
 
 #endif // keys_H_

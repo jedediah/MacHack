@@ -32,35 +32,35 @@ int CharToKeyCode[] = {
   VK_ESCAPE,
   VK_BACKSLASH | VK_FLAG_CTRL,
   VK_RBRACKET | VK_FLAG_CTRL,
-  VK_SIX | VK_FLAG_SHIFT | VK_FLAG_CTRL,
+  VK_6 | VK_FLAG_SHIFT | VK_FLAG_CTRL,
   VK_MINUS | VK_FLAG_SHIFT | VK_FLAG_CTRL,
   
   VK_SPACE,
-  VK_ONE | VK_FLAG_SHIFT,
+  VK_1 | VK_FLAG_SHIFT,
   VK_APOSTROPHE | VK_FLAG_SHIFT,
-  VK_THREE | VK_FLAG_SHIFT,
-  VK_FOUR | VK_FLAG_SHIFT,
-  VK_FIVE | VK_FLAG_SHIFT,
-  VK_SEVEN | VK_FLAG_SHIFT,
+  VK_3 | VK_FLAG_SHIFT,
+  VK_4 | VK_FLAG_SHIFT,
+  VK_5 | VK_FLAG_SHIFT,
+  VK_7 | VK_FLAG_SHIFT,
   VK_APOSTROPHE,
-  VK_NINE | VK_FLAG_SHIFT,
-  VK_ZERO | VK_FLAG_SHIFT,
-  VK_EIGHT | VK_FLAG_SHIFT,
+  VK_9 | VK_FLAG_SHIFT,
+  VK_0 | VK_FLAG_SHIFT,
+  VK_8 | VK_FLAG_SHIFT,
   VK_EQUALS | VK_FLAG_SHIFT,
   VK_COMMA,
   VK_MINUS,
   VK_PERIOD,
   VK_SLASH,
-  VK_ZERO,
-  VK_ONE,
-  VK_TWO,
-  VK_THREE,
-  VK_FOUR,
-  VK_FIVE,
-  VK_SIX,
-  VK_SEVEN,
-  VK_EIGHT,
-  VK_NINE,
+  VK_0,
+  VK_1,
+  VK_2,
+  VK_3,
+  VK_4,
+  VK_5,
+  VK_6,
+  VK_7,
+  VK_8,
+  VK_9,
   VK_SEMICOLON | VK_FLAG_SHIFT,
   VK_SEMICOLON,
   VK_COMMA | VK_FLAG_SHIFT,
@@ -68,7 +68,7 @@ int CharToKeyCode[] = {
   VK_PERIOD | VK_FLAG_SHIFT,
   VK_SLASH | VK_FLAG_SHIFT,
  
-  VK_TWO | VK_FLAG_SHIFT,
+  VK_2 | VK_FLAG_SHIFT,
   VK_A | VK_FLAG_SHIFT,
   VK_B | VK_FLAG_SHIFT,
   VK_C | VK_FLAG_SHIFT,
@@ -98,7 +98,7 @@ int CharToKeyCode[] = {
   VK_LBRACKET,
   VK_BACKSLASH,
   VK_RBRACKET,
-  VK_SIX | VK_FLAG_SHIFT,
+  VK_6 | VK_FLAG_SHIFT,
   VK_MINUS | VK_FLAG_SHIFT,
   
   VK_BACKTICK,
@@ -135,3 +135,57 @@ int CharToKeyCode[] = {
   VK_FORWARD_DELETE
 };
 
+
+bool vkIsLetter(int key) {
+  switch (key) {
+    case VK_A:
+    case VK_B:
+    case VK_C:
+    case VK_D:
+    case VK_E:
+    case VK_F:
+    case VK_G:
+    case VK_H:
+    case VK_I:
+    case VK_J:
+    case VK_K:
+    case VK_L:
+    case VK_M:
+    case VK_N:
+    case VK_O:
+    case VK_P:
+    case VK_Q:
+    case VK_R:
+    case VK_S:
+    case VK_T:
+    case VK_U:
+    case VK_V:
+    case VK_W:
+    case VK_X:
+    case VK_Y:
+    case VK_Z:
+      return true;
+      
+    default:
+      return false;
+	}
+}
+
+bool vkIsNumber(int key) {
+  switch(key) {
+    case VK_0:
+    case VK_1:
+    case VK_2:
+    case VK_3:
+    case VK_4:
+    case VK_5:
+    case VK_6:
+    case VK_7:
+    case VK_8:
+    case VK_9:
+      return true;
+      
+    default:
+      return false;
+  }
+}

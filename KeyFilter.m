@@ -147,11 +147,20 @@ CGEventRef Callback(CGEventTapProxy proxy,
     case kCGEventKeyDown:
     case kCGEventKeyUp:
       rightShiftFlag = false;
+ 
       if (keycode == VK_ESCAPE) {
         if (type == kCGEventKeyDown && ++escapeCount >= 5)
           CFRunLoopStop(runLoop);
       } else {
         escapeCount = 0;
+      }
+      
+      if (vkIsLetter(keycode)) {
+        if (flags & kCGEventFlagMaskSecondaryFn) {
+          CGEventSetFlags(event, flags | kCGEventFlagMaskShift
+                                       | kCGEventFlagMaskCommand
+                                       & ~kCGEventFlagMaskSecondaryFn);
+        }
       }
       
       switch (keycode) {
