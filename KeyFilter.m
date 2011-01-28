@@ -136,7 +136,11 @@ CGEventRef Callback(CGEventTapProxy proxy,
         case VK_SHIFT_R:
           if (flags & kCGEventFlagMaskShift) {
             rightShiftFlag = true;
-          } else if (rightShiftFlag) {
+            rightShiftTime = CGEventGetTimestamp(event);
+          }
+          else if (rightShiftFlag &&
+                   CGEventGetTimestamp(event) - rightShiftTime < KEY_HOLD_TIME_THRESHOLD) {
+            
             rightShiftFlag = false;
             PostKeyPress(ctx, VK_FORWARD_DELETE, flags);
           }

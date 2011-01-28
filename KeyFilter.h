@@ -11,6 +11,8 @@
 
 #import "Console.h"
 
+#define KEY_HOLD_TIME_THRESHOLD 300000000L // .3 seconds
+
 @interface KeyFilter : NSObject {
   int escapeCount;
   CFRunLoopRef runLoop;
@@ -18,6 +20,7 @@
   NSObject<Console>* console;
   bool enabled;
   bool rightShiftFlag;
+  CGEventTimestamp rightShiftTime;
 }
 
 - (CGEventRef) callbackWithProxy:(CGEventTapProxy) proxy
